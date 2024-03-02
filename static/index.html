@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+	<head>
+		<style>
+		    #inputs {
+                      position: relative;
+		      left: 40%;
+		      top: 20%;
+		      width: 200px;
+		    }
+		    #address {
+		    	width: 200px;
+			position: relative;
+			left: 10px;
+		    }
+		    #amount {
+			width: 200px;
+			position: relative;
+			left: 10px;
+		    }
+		    hr {
+			width: 230px;
+		    }
+		</style>
+		<title>Signet Casa21 - Faucet</title>
+	</head>
+	<body>
+		<div id="inputs">
+			<p>Address</p>
+			<input placeholder="tb143d.." id="address">
+			<p>Amount</p>
+			<input id="amount" placeholder="6969">
+			<hr>
+			<button onclick="send()">Gime sats!</button>
+		</div>
+	</body>
+	<script>
+		function send() {
+			const address = document.getElementById("address").value;
+			const amount = document.getElementById("amount").value;
+			const instance = axios.create({
+  				baseURL: '/',
+  				timeout: 1000,
+			});
+			instance.post("/send/", {
+				address,
+				amount: parseInt(amount)
+			}).then((res) => {
+				alert("sent tx with txid: " + res.data)
+			}).catch((res) => {
+				alert("error: " + res.response.data)
+			})
+		}
+	</script>
+</html>
